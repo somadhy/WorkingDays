@@ -121,3 +121,4 @@ Response body
 ## Dependencies
 - Serilog
 - Swashbuckle Swagger
+- Microsoft.AspNetCore.Cors

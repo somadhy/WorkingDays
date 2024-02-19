@@ -2,7 +2,6 @@ using Serilog;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .WriteTo.File("log.txt")
     .CreateLogger();
 
 try
@@ -12,6 +11,7 @@ try
 
     var builder = WebApplication.CreateBuilder(args);
 
+    builder.Services.AddCors();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 

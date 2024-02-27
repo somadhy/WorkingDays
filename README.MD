@@ -1,6 +1,6 @@
 # WorkingDays
 
-Is simple API for fork with buiseness days
+Is simple API for work with buiseness days
 
 ## Using 
 
@@ -82,7 +82,7 @@ Response body
 }
 ```
 
-Adding 5 business days to a date 31.12.2023:
+Adding 5 days to a date 31.12.2023:
 
 ``` bash
 curl -X 'GET' \
@@ -100,7 +100,7 @@ Response body
 }
 ```
 
-Adding 10 any days to the date 31.12.2023:
+Adding 10 business days to the date 31.12.2023:
 
 ```bash
 curl -X 'GET' \

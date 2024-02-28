@@ -4,31 +4,13 @@ using Serilog;
 /// <summary>
 /// Repo for days
 /// </summary>
-public class DaysTextFileRepository : IDaysRepository
+public class DaysTextFileRepository (FileInfo daysFile, uint cacheLifetimeSeconds = 600) : IDaysRepository
 {
 
-    /// <summary>
-    /// Cache lifetime in seconds.
-    /// </summary>
-    public uint CacheLifetimeSeconds {get; set;}
-
-    protected FileInfo DaysFile { get; }
 
     private DateTime cacheLifetime;
 
     private HashSet<DayInfo> cache = [];
-
-    /// <summary>
-    /// Constructor.
-    /// </summary>
-    /// <param name="daysFile">Register file</param>
-    /// <param name="cacheLifetimeSeconds">Cache lifetime in seconds</param>
-    public DaysTextFileRepository(FileInfo daysFile, uint cacheLifetimeSeconds = 600)
-    {
-        DaysFile = daysFile;
-        CacheLifetimeSeconds = cacheLifetimeSeconds;
-    }
-
     
     /// <summary>
     /// Create new day info in registry.
@@ -72,7 +54,7 @@ public class DaysTextFileRepository : IDaysRepository
     {
         if(cacheLifetime <= DateTime.UtcNow) {
             await Reload();
-            cacheLifetime = DateTime.UtcNow.AddSeconds(CacheLifetimeSeconds);
+            cacheLifetime = DateTime.UtcNow.AddSeconds(cacheLifetimeSeconds);
         }        
         return method();
     }
@@ -81,7 +63,7 @@ public class DaysTextFileRepository : IDaysRepository
     {
         Log.Debug("Cache expired. Refresh.");
         cache.Clear();
-        using var reader = new StreamReader(DaysFile.FullName);
+        using var reader = new StreamReader(daysFile.FullName);
 
         while (!reader.EndOfStream)
         {
